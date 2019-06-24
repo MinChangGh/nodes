@@ -4,11 +4,11 @@ const path = require('path')
 app.use(express.static(path.join(__dirname, '')))
 var bodyParser = require("body-parser");
 var mutipart = require('connect-multiparty');
-var mutipartMiddeware = mutipart();
+var mutipartMiddeware = mutipart(); // mutipartMiddeware 作用
 app.use(mutipart({
 	uploadDir: './public/image'
 }));
-app.use(bodyParser.urlencoded({
+app.use(bodyParser.urlencoded({  // bodyParser 的作用
 	extended: false
 }));
 var mysql = require('mysql');
@@ -35,10 +35,24 @@ app.get('/home/:id', function(req, res, next) {
 		res.send(JSON.stringify(data))
 	});
 });
+let datas= []
+app.get('/banner', function(req, res, next) {
+
+	for (let i = 3; i<9; i++) {
+		db.query(`SELECT * FROM product_image WHERE product_id =${i}`, (err, data) => {
+			if(err) {
+				return err
+			}
+			console.log(datas)
+			datas.push(data)
+		});
+	}
+	console.log(datas)
+	res.send(JSON.stringify(datas))
+});
 
 // upload  上传
 app.post('/upload', mutipartMiddeware, function(req, res) {
-	console.log(req.files[0])
 	let data = JSON.stringify(req.files)
 	res.send(data[file0])
 
@@ -49,10 +63,8 @@ app.post('/login', (req, res, next) => {
 	let user_name = req.body.userName
 	let pwd = req.body.pwd
 	let phone = req.body.phone
-	console.log(req.body)
 	let sql = `INSERT INTO user (pay_password,user_name,login_password,user_number) VALUES ('19','${user_name}',${pwd},'${phone}')`
 	db.query(sql, (err, data) => {
-		console.log(err)
 		if(err) {
 			return err
 		}
