@@ -35,20 +35,14 @@ app.get('/home/:id', function(req, res, next) {
 		res.send(JSON.stringify(data))
 	});
 });
-let datas= []
 app.get('/banner', function(req, res, next) {
-
-	for (let i = 3; i<9; i++) {
-		db.query(`SELECT * FROM product_image WHERE product_id =${i}`, (err, data) => {
+		db.query(`SELECT * FROM product_image WHERE product_id >3 AND product_id<10 GROUP BY product_id `, (err, data) => {
 			if(err) {
 				return err
 			}
-			console.log(datas)
-			datas.push(data)
+
+			res.send(JSON.stringify(data))
 		});
-	}
-	console.log(datas)
-	res.send(JSON.stringify(datas))
 });
 
 // upload  上传
