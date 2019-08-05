@@ -15,7 +15,7 @@ var mysql = require('mysql');
 var db = mysql.createPool({
 	host: 'localhost',
 	user: 'root',
-	password: 'root',
+	password: '123456',
 	database: 'jd'
 });
 app.all('*', function(req, res, next) {
@@ -65,6 +65,21 @@ app.post('/login', (req, res, next) => {
 		res.send('ok')
 	});
 });
+
+// 搜索商品
+
+app.post('/findGoods', (req, res, next) => {
+	let txt = req.body.txt
+
+	let sql = `SELECT * FROM product WHERE product_name LIKE '%${txt}%'`
+	db.query(sql, (err, data) => {
+		if(err) {
+			return err
+		}
+		res.send(JSON.stringify(data))
+	});
+});
+
 
 app.listen(90, () => {
 	console.log('listen:' + 90)
