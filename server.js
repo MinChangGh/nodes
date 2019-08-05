@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 const path = require('path')
-app.use(express.static(path.join(__dirname, '')))
+app.use(express.static(path.join(__dirname, 'public')))
 var bodyParser = require("body-parser");
 var mutipart = require('connect-multiparty');
 var mutipartMiddeware = mutipart(); // mutipartMiddeware 作用
@@ -16,7 +16,7 @@ var db = mysql.createPool({
 	host: 'localhost',
 	user: 'root',
 	password: 'root',
-	database: 'runoob'
+	database: 'jd'
 });
 app.all('*', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
