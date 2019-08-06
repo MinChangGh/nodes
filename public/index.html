@@ -10,22 +10,27 @@
       padding: 0
     }
   .demo{
+    margin: 200px auto;
     width: 200px;
-    height: 200px;
+    height: 180px;
     background: #000;
-    clip-path: polygon(50% 0,100% 50%,0 100%,30% 30%)
+    clip-path: polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)
   }
+    .circle{
+
+    }
   
   </style>
 </head>
 <body>
 <div id="app">
-  <div class="demo"></div>
+  <div class="demo">
+    <div class="circle"></div>
+  </div>
 </div>
 
 <script>
-  let a = document.documentElement.clientWidth
-  console.log(a)
+
 
 </script>
 </body>
