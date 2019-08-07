@@ -45,6 +45,20 @@ app.get('/banner', function(req, res, next) {
 		});
 });
 
+// 获取列表
+
+app.get('/getlist', function(req, res, next) {
+  db.query(`SELECT * FROM product WHERE product_id%3=0`, (err, data) => {
+    if(err) {
+      console.log(err)
+      return err
+    }
+    console.log(data)
+    res.send(JSON.stringify(data))
+  });
+});
+
+
 // upload  上传
 app.post('/upload', mutipartMiddeware, function(req, res) {
 	let data = JSON.stringify(req.files)
