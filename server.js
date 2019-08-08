@@ -62,7 +62,8 @@ app.get('/getlist', function(req, res, next) {
 // upload  上传
 app.post('/upload', mutipartMiddeware, function(req, res) {
 	let data = JSON.stringify(req.files)
-	res.send(data[file0])
+	console.log(data)
+	res.send(data)
 
 });
 
