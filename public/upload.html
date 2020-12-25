@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.js"></script>
+
+</head>
+
+<body>
+    <h1>upload</h1>
+    <input type="file" accept="*" id="file" />
+    <script>
+        window.onload = function () {
+            let dom = document.getElementById('file')
+            dom.addEventListener('change', function () {
+                let shardSize = 20 * 1024 * 1024;
+                let file = document.getElementById('file').files[0]
+                let size = file.size
+
+                let chunkNum = Math.ceil(size / shardSize)
+                for (let i = 0; i < chunkNum; i++) {
+                    let start = shardSize * i
+                    let end
+                    if (i == 9) {
+                        end = size
+                    } else {
+                        end = shardSize * (i + 1)
+                    }
+                    let form = new FormData()
+                    form.append(`file${i}`, file.slice(start, end))
+                    form.append('name', `file${i}`)
+                    var configs = {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    };
+                    axios.post('http://192.168.31.28:3001/upload', form, configs).then(res => {
+                        console.log(res)
+                    })
+                }
+
+            })
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
